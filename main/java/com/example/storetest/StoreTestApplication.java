@@ -23,7 +23,7 @@ public class StoreTestApplication {
 
         return args -> {
 
-//            Faker faker = new Faker();
+            Faker faker = new Faker();
 //
 //            for (int i = 0; i < 3; i++) {
 //
@@ -41,7 +41,10 @@ public class StoreTestApplication {
 //            }
 //            storeService.getAllProducts().stream().forEach(System.out::println);
 
-            storeService.deleteProduct(7L,32L);
+//            storeService.addProduct(7L,new Product(faker.code().asin(),
+//                            "MYTITLE",faker.number().randomDigit(),faker.number().randomDigit(),
+//                            faker.number().randomDigit(),faker.number().randomDigit(),faker.number().randomDigit(),faker.number().randomDigit()));
+            storeService.deleteProduct(7L,37L);
 
 
 

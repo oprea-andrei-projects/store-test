@@ -150,4 +150,12 @@ public class Product {
 
                 '}';
     }
+
+    @Override
+    public boolean equals(Object o){
+
+        Product product = (Product) o;
+
+        return this.id== product.id;
+    }
 }

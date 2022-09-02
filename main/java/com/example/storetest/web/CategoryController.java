@@ -5,10 +5,7 @@ import com.example.storetest.model.Product;
 import com.example.storetest.service.StoreService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -31,5 +28,13 @@ public class CategoryController {
 
         return new ResponseEntity<>(allmyProducts, HttpStatus.OK);
 
+    }
+
+    @PostMapping("addProduct")
+    public ResponseEntity<Product> addAProduct(@RequestParam Long id, @RequestBody Product product){
+
+        storeService.addProduct(id,product);
+
+        return new ResponseEntity<>(product,HttpStatus.OK);
     }
 }

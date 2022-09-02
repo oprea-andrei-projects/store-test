@@ -81,5 +81,10 @@ public class Category {
 
     }
 
+    public void deleteProductFromCategory(Long prodID){
+        this.getProducts().remove(new Product(prodID));
+
+    }
+
 
 }

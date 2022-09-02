@@ -1,6 +1,8 @@
 package com.example.storetest.service;
 
 
+import com.example.storetest.exceptions.ItemAlreadyExistsException;
+import com.example.storetest.exceptions.NoCategoryFoundException;
 import com.example.storetest.exceptions.NoProductsException;
 import com.example.storetest.model.Category;
 import com.example.storetest.model.Product;
@@ -9,6 +11,7 @@ import com.example.storetest.repo.ProductRepo;
 import org.springframework.stereotype.Service;
 
 import javax.swing.text.html.Option;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -40,20 +43,38 @@ public class StoreService {
 
     }
 
+    public Product addProduct(Long catId,Product product){
+
+        Optional<Category> categoryOptional = this.categoryRepo.findById(catId);
+
+        if(categoryOptional.isEmpty()){
+            throw new NoCategoryFoundException("No category found !!!");
+        }
+
+        if(Collections.frequency(categoryOptional.get().getProducts(), product)!=0){
+
+            throw new ItemAlreadyExistsException("Product aleready exists !!!");
+        }
+
+        categoryOptional.get().addProducts(product);
+
+        this.productRepo.save(product);
+
+        return product;
+    }
+
    public void deleteProduct(Long catId, Long pId){
 
        Optional<Category> categoryOptional = this.categoryRepo.findById(catId);
        Optional<Product> productOptional = this.productRepo.findById(pId);
-       categoryOptional.get().getProducts().remove(productOptional.get());
+       categoryOptional.get().deleteProductFromCategory(productOptional.get().getId());
 
-       this.productRepo.delete(productOptional.get());
-       this.categoryRepo.save(categoryOptional.get());
 
+
+
+       categoryRepo.save(categoryOptional.get());
 
        categoryOptional.get().getProducts().stream().forEach(System.out::println);
-
-
-
 
 
    }
